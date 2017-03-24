@@ -36,6 +36,7 @@ class GameScene: SKScene {
 
     // call functions here
     override func didMove(to view: SKView) {
+        playSound()
         background.position = CGPoint(x: frame.size.width / 2, y: frame.size.height / 2)
         background.zPosition = 1
         addChild(background)
@@ -80,17 +81,9 @@ class GameScene: SKScene {
     
     // background music - ryan
     func playSound() {
-        let url = Bundle.main.url(forResource: "backgroundmusic", withExtension: "mp3")!
-    
-        do {
-            player = try AVAudioPlayer(contentsOf: url)
-            guard let player = player else { return }
-            
-            player.prepareToPlay()
-            player.play()
-        } catch let error as NSError {
-            print(error.description)
-        }
+        let backgroundMusic = SKAudioNode(fileNamed: "backgroundmusic.mp3")
+        backgroundMusic.autoplayLooped = true
+        addChild(backgroundMusic)
     }
     
     // change to showing score - ryan

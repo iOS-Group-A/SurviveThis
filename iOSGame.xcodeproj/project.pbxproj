@@ -18,7 +18,7 @@
 		0AC735931E4D88860095FA28 /* iOSGameTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AC735921E4D88860095FA28 /* iOSGameTests.swift */; };
 		0AC7359E1E4D88860095FA28 /* iOSGameUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AC7359D1E4D88860095FA28 /* iOSGameUITests.swift */; };
 		669D582B1E5782EA00919ADC /* GameOverScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 669D582A1E5782EA00919ADC /* GameOverScene.swift */; };
-		76844BD71E728C7900BF3748 /* backgroundmusic.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 76844BD61E728C7900BF3748 /* backgroundmusic.mp3 */; };
+		AC888D301E85A22600C8B4D3 /* backgroundmusic.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = AC888D2F1E85A22600C8B4D3 /* backgroundmusic.mp3 */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -56,7 +56,7 @@
 		0AC7359D1E4D88860095FA28 /* iOSGameUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iOSGameUITests.swift; sourceTree = "<group>"; };
 		0AC7359F1E4D88860095FA28 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		669D582A1E5782EA00919ADC /* GameOverScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameOverScene.swift; sourceTree = "<group>"; };
-		76844BD61E728C7900BF3748 /* backgroundmusic.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = backgroundmusic.mp3; sourceTree = "<group>"; };
+		AC888D2F1E85A22600C8B4D3 /* backgroundmusic.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = backgroundmusic.mp3; path = ../../../Downloads/backgroundmusic.mp3; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -107,7 +107,7 @@
 		0AC735761E4D88850095FA28 /* iOSGame */ = {
 			isa = PBXGroup;
 			children = (
-				76844BD61E728C7900BF3748 /* backgroundmusic.mp3 */,
+				AC888D2F1E85A22600C8B4D3 /* backgroundmusic.mp3 */,
 				0AC735771E4D88850095FA28 /* AppDelegate.swift */,
 				0AC735791E4D88850095FA28 /* GameScene.sks */,
 				0AC7357B1E4D88850095FA28 /* Actions.sks */,
@@ -252,7 +252,7 @@
 				0AC7357A1E4D88850095FA28 /* GameScene.sks in Resources */,
 				0AC735851E4D88850095FA28 /* Assets.xcassets in Resources */,
 				0AC735881E4D88850095FA28 /* LaunchScreen.storyboard in Resources */,
-				76844BD71E728C7900BF3748 /* backgroundmusic.mp3 in Resources */,
+				AC888D301E85A22600C8B4D3 /* backgroundmusic.mp3 in Resources */,
 				0AC7357C1E4D88850095FA28 /* Actions.sks in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
