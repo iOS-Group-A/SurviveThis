@@ -15,7 +15,38 @@ class GameOverScene: SKScene {
     let gameover = SKSpriteNode(imageNamed: "gameover")
     let background = SKSpriteNode(imageNamed: "grass-background.jpg") // background image on the gameover scene
     
-    override init(size: CGSize) {
+    override init(size:CGSize) {
+        
+        super.init(size: size)
+        
+        background.position = CGPoint(x: frame.size.width / 2, y: frame.size.height / 2)
+        background.zPosition = 1
+        addChild(background)
+        
+        gameover.position = CGPoint(x: size.width/2, y: size.height/1.3)
+        gameover.zPosition = 2
+        addChild(gameover)
+        
+        button.position = CGPoint(x: size.width/2, y: size.height/2.3)
+        button.zPosition = 2
+        addChild(button)
+        
+        let defaults = UserDefaults.standard
+        let token = defaults.string(forKey: "myKey")
+        
+        let message = "Your Score: " + token!
+        
+        let label = SKLabelNode(fontNamed: "Thonburi-Bold")
+        label.text = message
+        label.fontSize = 30
+        label.fontColor = SKColor.black
+        label.position = CGPoint(x: size.width/2, y: size.height/5.0)
+        label.zPosition = 2
+        addChild(label)
+        
+    }
+    
+    init(size: CGSize, won: Bool, score: Int) {
         
         super.init(size: size)
         
