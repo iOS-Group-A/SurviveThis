@@ -16,6 +16,7 @@ var myLabel: SKLabelNode!
 
 class GameScene: SKScene {
     
+    // put variable here
     var chicken = SKSpriteNode(imageNamed: "chicken")
     var chickenPosition = ""
     let Circle1 = SKSpriteNode(imageNamed: "barn")
@@ -33,18 +34,16 @@ class GameScene: SKScene {
         }
     }
 
+    // call functions here
     override func didMove(to view: SKView) {
         background.position = CGPoint(x: frame.size.width / 2, y: frame.size.height / 2)
         background.zPosition = 1
         addChild(background)
-        initChicken()
         addButtons()
-        initScore()
-        playSound()
         initTimer()
     }
     
-    // init timer
+    // timer - lydia
     func initTimer() {
         levelTimerLabel.fontColor = SKColor.black
         levelTimerLabel.fontSize = 19
@@ -75,7 +74,11 @@ class GameScene: SKScene {
         run(SKAction.repeatForever(sequence), withKey: "countdown")
     }
 
-    // background music
+    // spawning clouds - rebecca
+    
+    // moving clouds - arnold
+    
+    // background music - ryan
     func playSound() {
         let url = Bundle.main.url(forResource: "backgroundmusic", withExtension: "mp3")!
     
@@ -90,92 +93,17 @@ class GameScene: SKScene {
         }
     }
     
-    // shows the score
+    // change to showing score - ryan
     func initScore() {
-        myLabel = SKLabelNode(fontNamed: "Helvetica")
-        myLabel.text = "0"
-        myLabel.fontSize = 19
-        myLabel.fontColor = SKColor.black
-        myLabel.position = CGPoint(x: size.width * 0.065 , y: size.height * 0.945) // score on the top-left corner
-        myLabel.zPosition = 2
-        addChild(myLabel)
     }
-    
-    /* Creates 5 instances of a chicken and add them to the chickens array */
-    func initChicken() {
-        for i in 0..<numberOfChickens {
-            chicken = SKSpriteNode(imageNamed: "chicken")
-            
-            let placement = Int(arc4random_uniform(100))
 
-            if(placement <= 33) {
-                chicken.position = CGPoint(x: size.width * 0.145, y: (size.height * 0.25 + CGFloat(i) * size.height * 0.15))
-                chickenPosition = "left"
-            } else if (placement <= 66) {
-                chicken.position = CGPoint(x: size.width * 0.5, y: (size.height * 0.25 + CGFloat(i) * size.height * 0.15))
-                chickenPosition = "mid"
-            } else {
-                chicken.position = CGPoint(x: size.width * 0.855, y: (size.height * 0.25 + CGFloat(i) * size.height * 0.15))
-                chickenPosition = "right"
-            }
-            
-            arrayChickens.append(chicken)
-            arrayPositions.append(chickenPosition)
-            chicken.zPosition = 2
-            addChild(chicken)
-
-        }
-    }
-    
-
+    // change to spawning enemies - shane
     func addChicken() {
-        // Adds chicken to last index of arrayChicken
-        chicken = SKSpriteNode(imageNamed: "chicken")
-        let placement = Int(arc4random_uniform(100))
-        
-        if(placement <= 33) {
-            chicken.position = CGPoint(x: size.width * 0.145, y: (size.height * 0.25 + 5 * size.height * 0.15))
-            chickenPosition = "left"
-        } else if (placement <= 66) {
-            chicken.position = CGPoint(x: size.width * 0.5, y: (size.height * 0.25 + 5 * size.height * 0.15))
-            chickenPosition = "mid"
-        } else {
-            chicken.position = CGPoint(x: size.width * 0.855, y: (size.height * 0.25 + 5 * size.height * 0.15))
-            chickenPosition = "right"
-        }
-        
-        arrayChickens[4] = chicken
-        arrayPositions[4] = chickenPosition
-        
-        chicken.zPosition = 2
-        addChild(chicken)
 
     }
     
+    // change to enemy getting hit (delete) - wayne
     func moveDown() {
-        arrayChickens[0].removeFromParent() // remove the chicken in the first row
-        for i in 0..<numberOfChickens {
-            if (i != 4) {
-                arrayPositions[i] = arrayPositions[i+1]
-                arrayChickens[i] = arrayChickens[i+1]
-            }
-        }
-        addChicken()
-
-        for i in 0..<numberOfChickens {
-            //arrayChickens[i].position = CGPoint(x: arrayChickens[i].position.x, y: arrayChickens[i].position.y - size.height * 0.15)
-            let moveDownAction = SKAction.moveBy(x: 0, y: -size.height * 0.15, duration:0.1)
-            let moveDownSequence = SKAction.sequence([moveDownAction])
-            arrayChickens[i].run(moveDownSequence)
-        }
-        score += 1
-        
-        let defaults = UserDefaults.standard
-        defaults.set(score, forKey: "myKey") // save the score
-        defaults.synchronize()
-        
-        
-        myLabel.text = "\(score)"
     }
     
     
