@@ -52,7 +52,6 @@ class GameScene: SKScene {
         levelTimerLabel.text = "Time left: '\(levelTimerValue)"
         levelTimerLabel.zPosition = 2
         addChild(levelTimerLabel)
-        print("test")
         
         let wait = SKAction.wait(forDuration: 1) // change countdown speed here
         let countdown = SKAction.run({
@@ -65,10 +64,7 @@ class GameScene: SKScene {
             } else {
                 self.removeAction(forKey: "countdown")
                 self.reset()
-                let skView = self.view
-                let reveal = SKTransition.fade(with: UIColor.white, duration: 3)
-                let gameOverScene = GameOverScene(size: self.size)
-                skView?.presentScene(gameOverScene, transition: reveal)
+                self.initScore()
             }
         })
         let sequence = SKAction.sequence([wait, countdown])
@@ -88,6 +84,10 @@ class GameScene: SKScene {
     
     // change to showing score - ryan
     func initScore() {
+        let skView = self.view
+        let reveal = SKTransition.fade(with: UIColor.white, duration: 3)
+        let gameOverScene = GameOverScene(size: self.size)
+        skView?.presentScene(gameOverScene, transition: reveal)
     }
 
     // change to spawning enemies - shane
