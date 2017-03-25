@@ -114,13 +114,13 @@
 				0AC735791E4D88850095FA28 /* GameScene.sks */,
 				0AC7357B1E4D88850095FA28 /* Actions.sks */,
 				0AC7357D1E4D88850095FA28 /* GameScene.swift */,
+				669D582A1E5782EA00919ADC /* GameOverScene.swift */,
 				0AC7357F1E4D88850095FA28 /* GameViewController.swift */,
 				FB56A7261E85CEFD005B12F2 /* Skull.atlas */,
 				0AC735811E4D88850095FA28 /* Main.storyboard */,
 				0AC735841E4D88850095FA28 /* Assets.xcassets */,
 				0AC735861E4D88850095FA28 /* LaunchScreen.storyboard */,
 				0AC735891E4D88850095FA28 /* Info.plist */,
-				669D582A1E5782EA00919ADC /* GameOverScene.swift */,
 			);
 			path = iOSGame;
 			sourceTree = "<group>";
@@ -211,7 +211,7 @@
 				TargetAttributes = {
 					0AC735731E4D88850095FA28 = {
 						CreatedOnToolsVersion = 8.2.1;
-						DevelopmentTeam = BG7CFT84ZP;
+						DevelopmentTeam = N6RP3H788Z;
 						ProvisioningStyle = Automatic;
 					};
 					0AC7358D1E4D88860095FA28 = {
@@ -438,7 +438,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = BG7CFT84ZP;
+				DEVELOPMENT_TEAM = N6RP3H788Z;
 				INFOPLIST_FILE = iOSGame/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -453,7 +453,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = BG7CFT84ZP;
+				DEVELOPMENT_TEAM = N6RP3H788Z;
 				INFOPLIST_FILE = iOSGame/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

@@ -62,10 +62,7 @@ class GameOverScene: SKScene {
         button.zPosition = 2
         addChild(button)
         
-        let defaults = UserDefaults.standard
-        let token = defaults.string(forKey: "myKey")
-        
-        let message = "Your Score: " + token!
+        let message = "Your Score: " + String(score)
         
         let label = SKLabelNode(fontNamed: "Thonburi-Bold")
         label.text = message

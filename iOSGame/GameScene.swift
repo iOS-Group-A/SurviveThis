@@ -11,20 +11,29 @@ import GameplayKit
 import AVFoundation
 import AudioToolbox
 
-var score: Int = 0
 var myLabel: SKLabelNode!
+
+struct PhysicsCategory {
+    static let None      : UInt32 = 0
+    static let All       : UInt32 = UInt32.max
+    static let Monster   : UInt32 = 0b1       // 1
+    static let Bullet    : UInt32 = 0b10      // 2
+}
+
+
+func random() -> CGFloat {
+    return CGFloat(Float(arc4random()) / 0xFFFFFFFF)
+}
+
+func random(min: CGFloat, max: CGFloat) -> CGFloat {
+    return random() * (max - min) + min
+}
+
+
+
 
 class GameScene: SKScene, SKPhysicsContactDelegate
 {
-    
-    
-    struct PhysicsCategory {
-        static let None      : UInt32 = 0
-        static let All       : UInt32 = UInt32.max
-        static let Monster   : UInt32 = 0b1       // 1
-        static let Bullet    : UInt32 = 0b10      // 2
-    }
-
     
     //============= Texture Declarations =============
     // define the purple monster's frames
@@ -43,13 +52,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate
     var player: AVAudioPlayer?
     var levelTimerLabel = SKLabelNode(fontNamed: "Helvetica")
     var score:Int = 0
-    var levelTimerValue: Int = 30 {
+    var levelTimerValue: Int = 99999 {
         didSet {
-            levelTimerLabel.text = "Time left: \(levelTimerValue)"
+            levelTimerLabel.text = "Time : \(levelTimerValue)"
         }
     }
 
     override func didMove(to view: SKView) {
+        levelTimerLabel.isHidden = true
         background.position = CGPoint(x: frame.size.width / 2, y: frame.size.height / 2)
         background.zPosition = 1
         addChild(background)
@@ -59,6 +69,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         playSound()
         initTimer()
         
+        physicsWorld.gravity = CGVector.zero
+        physicsWorld.contactDelegate = self
         
         // make purple monster fkying frames
         var flyFrames:[SKTexture] = []
@@ -82,7 +94,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         
         skullDeathFrames = deathFrames
         
+        // swipe listeners
         
+        let swipeRight: UISwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(self.swipeRight))
+        swipeRight.direction = .right
+        view.addGestureRecognizer(swipeRight)
+        
+        let swipeLeft: UISwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(self.swipeLeft))
+        swipeLeft.direction = .left
+        view.addGestureRecognizer(swipeLeft)
     }
     
     // init timer
@@ -112,7 +132,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate
                 skView?.presentScene(gameOverScene, transition: reveal)
             }
         })
-        let sequence = SKAction.sequence([wait, countdown])
+        let sequence = SKAction.sequence([wait, countdown, SKAction.run(addCloud)])
         run(SKAction.repeatForever(sequence), withKey: "countdown")
     }
 
@@ -134,7 +154,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate
     // shows the score
     func initScore() {
         myLabel = SKLabelNode(fontNamed: "Helvetica")
-        myLabel.text = "0"
+        myLabel.text = String(self.score)
         myLabel.fontSize = 19
         myLabel.fontColor = SKColor.black
         myLabel.position = CGPoint(x: size.width * 0.065 , y: size.height * 0.945) // score on the top-left corner
@@ -175,6 +195,90 @@ class GameScene: SKScene, SKPhysicsContactDelegate
             addChild(chicken)
 
         }*/
+    }
+    
+    func swipeRight(sender: UISwipeGestureRecognizer) {
+        //let point: CGPoint = sender.location(in: sender.view!)
+        if sender.state == .ended {
+            enumerateChildNodes(withName: "//*", using: { (node, unsafePointer) in
+                if node.name == "cloud" {
+                
+                node.removeAllActions()
+                let goRight = SKAction.move(to: CGPoint(x: self.size.width + node.position.x, y: node.position.y), duration: 0.3)
+                let removeFromParent = SKAction.removeFromParent()
+                
+                node.run(SKAction.sequence([goRight, removeFromParent]))
+                }
+            })
+        }
+    }
+    
+    
+    func swipeLeft(sender:UISwipeGestureRecognizer) {
+        //let point: CGPoint = sender.location(in: sender.view!)
+        if sender.state == .ended {
+            enumerateChildNodes(withName: "//*", using: { (node, unsafePointer) in
+                if node.name == "cloud" {
+
+                node.removeAllActions()
+                let goLeft = SKAction.move(to: CGPoint(x: -node.position.x, y: node.position.y), duration: 0.3)
+                let removeFromParent = SKAction.removeFromParent()
+                
+                node.run(SKAction.sequence([goLeft, removeFromParent]))
+                }
+            })
+        }
+    }
+    
+//    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+//        
+//        let touch = touches.first
+//        touchLocation = touch!.location(in:self)
+//        touchedOrgans = self.nodes(at: touchLocation)
+//        if touchedOrgans.count > 0 {
+//            numOrgans = touchedOrgans.count
+//            if touchedOrgans[numOrgans - 1].name == "background" {
+//                print(touchedOrgans.popLast()?.name ?? "none")
+//            }
+//        }
+//        if touchedOrgans.count > 0 {
+//            numOrgans = touchedOrgans.count
+//            if touchedOrgans[numOrgans - 1].name == "hand" {
+//                print(touchedOrgans.popLast()?.name ?? "none")
+//            }
+//        }
+//        if touchedOrgans.count > 0 {
+//            numOrgans = touchedOrgans.count
+//            if touchedOrgans[numOrgans - 1].name == "Organ" {
+//                isFingerOnOrgan = true
+//                touchedOrgans[numOrgans-1].removeAction(forKey: "rotateOrgan")
+//            }
+//        }
+//    }
+    
+    
+    func addCloud(){
+        let cloudFrequent = random(min:5, max: 15)
+        if (levelTimerValue % Int(cloudFrequent) == 0){
+            let cloud = SKSpriteNode(imageNamed: "cloud.png" )
+            
+            let ratio = cloud.size.width/cloud.size.height
+            let cloudsize = frame.width/2
+            cloud.size = CGSize(width: cloudsize, height: cloudsize/ratio)
+            
+            cloud.name = "cloud"
+            
+            //let xMax = size.width - cloud.size.width/2
+            let actualX = random(min: cloud.size.width/2, max: size.width - cloud.size.width/2)
+            let actualY = random(min: cloud.size.height/2 + size.height * 0.1, max: size.height - cloud.size.width/3)
+            
+            
+            cloud.position = CGPoint(x: actualX, y: actualY)
+            cloud.zPosition = 4
+            addChild(cloud)
+            //scoreForAddCloud += 3
+            print("AddCloud")
+        }
     }
     
 
@@ -387,12 +491,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate
 //    }
     func bulletDidCollideWithMonster(bullet: SKSpriteNode, skull: SKSpriteNode) {
         print("shootEnemy")
+        score += 1
+        myLabel.text = String(score)
         skull.removeFromParent()
         bullet.removeFromParent()
     }
     func reset() {
         score = 0
-        levelTimerValue = 30
+        levelTimerValue = 9999999
     }
 
 }
